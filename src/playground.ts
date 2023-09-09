@@ -1,63 +1,62 @@
-// TS recommends to use Interfaces over Types when possible, still are specific use cases
-
-// Describe data structures in a more natural way
-// Describing objects
-// Shipment data, Orders
-
-// interface Person {
-//   name: string;
-//   age: number;
-// }
-
-class Person {
+interface Person {
+  kind: "business" | "academic";
   name: string;
   age: number;
-
-  constructor(name: string, age: number) {
-    this.name = name;
-    this.age = age;
-  }
 }
 
-// Type aliases
-// To describe function types
+interface BusinessPerson extends Person {
+  kind: "business";
+  salary: number;
+}
 
-// type Person = {
-//   name: string;
-//   age: number;
-// };
+interface AcademicPerson extends Person {
+  kind: "academic";
+  publications: string[];
+}
 
-// interface PersonLoggerFn {
-//   (name: string, age: number): string;
-// }
+type Human = BusinessPerson | AcademicPerson;
 
-type PersonLoggerFn = (name: string, age: number) => string;
+type RaceCar = {
+  name: string;
+  team: string;
+  maxSpeed: 200;
+};
+
+type CityCar = {
+  name: string;
+  space: string;
+  maxSpeed: 100;
+};
+
+type Car = RaceCar | CityCar;
 
 export default function play() {
-  // const name: string = "Connor";
-  const name: string = "Connor";
-  const age: number = 22;
-
-  const person = {
-    name: "John",
-    age: 34,
+  const car: RaceCar = {
+    name: "Race Car",
+    maxSpeed: 200,
+    team: "Ferrari",
   };
 
-  const logPersonInfo: PersonLoggerFn = (
-    personName: string,
-    personAge: number = 0
-  ): string => {
-    const info = `Name: ${personName}, age: ${personAge}`;
-    console.log(info);
-    return info;
-  };
-
-  function logPersonInfo2(person: Person) {
-    const info = `Name: ${person.name}, age: ${person.age}`;
-    console.log(info);
-    return info;
+  function logPersonInfo(human: Human) {
+    if (human.kind === "academic") {
+      console.log(human);
+    } else if (human.kind === "business") {
+      console.log(human);
+    } else {
+      console.log(human);
+    }
   }
 
-  logPersonInfo(name, age);
-  logPersonInfo2(new Person("Edward", 45));
+  function logCarInfo(car: Car) {
+    switch (car.maxSpeed) {
+      case 100:
+        console.log(car.space);
+        break;
+      case 200:
+        console.log(car.team);
+        break;
+      default:
+        console.log(car);
+    }
+  }
 }
