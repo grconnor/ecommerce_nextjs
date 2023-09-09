@@ -1,62 +1,64 @@
 interface Person {
-  kind: "business" | "academic";
   name: string;
   age: number;
+  city: string;
 }
 
-interface BusinessPerson extends Person {
-  kind: "business";
-  salary: number;
+class Student implements Person {
+  name = "";
+  age = 0;
+  city = "";
 }
 
-interface AcademicPerson extends Person {
-  kind: "academic";
-  publications: string[];
+class BusinessPerson implements Person {
+  name = "";
+  age = 0;
+  city = "";
+  salary = 1000;
 }
 
-type Human = BusinessPerson | AcademicPerson;
-
-type RaceCar = {
+type Car = {
+  brand: string;
+  age: number;
   name: string;
-  team: string;
-  maxSpeed: 200;
+  city: string;
 };
 
-type CityCar = {
-  name: string;
-  space: string;
-  maxSpeed: 100;
-};
-
-type Car = RaceCar | CityCar;
+class Logger<
+  T extends Person = {
+    brand: string;
+    age: number;
+    name: string;
+    city: string;
+  }
+> {
+  log(items: Array<T>, callback: (i: T) => void) {
+    items.forEach((item) => {
+      callback(item);
+    });
+  }
+}
 
 export default function play() {
-  const car: RaceCar = {
-    name: "Race Car",
-    maxSpeed: 200,
-    team: "Ferrari",
-  };
+  const logger = new Logger();
 
-  function logPersonInfo(human: Human) {
-    if (human.kind === "academic") {
-      console.log(human);
-    } else if (human.kind === "business") {
-      console.log(human);
-    } else {
-      console.log(human);
-    }
-  }
-
-  function logCarInfo(car: Car) {
-    switch (car.maxSpeed) {
-      case 100:
-        console.log(car.space);
-        break;
-      case 200:
-        console.log(car.team);
-        break;
-      default:
-        console.log(car);
-    }
-  }
+  const persons = [
+    {
+      name: "Connor",
+      age: 30,
+      city: "Port Elizabeth",
+      salary: 1000,
+      brand: "",
+    },
+    {
+      name: "John",
+      age: 25,
+      city: "Stockholm City",
+      salary: 1500,
+      brand: "",
+    },
+  ];
+  logger.log(persons, (person) => {
+    console.log(person);
+  });
 }
