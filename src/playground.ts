@@ -2,12 +2,12 @@ interface Person {
   name: string;
 }
 
+type ReturnType<T> = T extends () => infer R ? R : number;
+
 export default function play() {
-  function logger(...args: any[]) {
+  function logger() {
     return "Hello World";
   }
 
-  const kindaLogger: typeof logger = (name: string, age: number) => "Hi";
-
-  kindaLogger("", 20);
+  const loggerReturn: ReturnType<typeof logger> = "Hi there";
 }
