@@ -1,16 +1,26 @@
-interface Person {
-  name: string;
-  age: number;
-}
+export default async function play() {
+  type Greeting = { message: string };
+  type InferHelloProps<T> = T extends () => Promise<{ props: infer Props }>
+    ? Props
+    : never;
 
-type Logger<T = string, E = number, R = string> = (param1: T, param2: E) => R;
+  const getHelloProps = async function () {
+    const greeting: Greeting = { message: "Hi friend!" };
 
-export default function play() {
-  const superLogger: Logger<string, number, string> = (name, age) => {
-    return "Hello world";
+    return {
+      props: {
+        greeting,
+        data: {
+          cars: ["car1", "car2"],
+        },
+      },
+    };
   };
 
-  const logger: Logger = (brand, age) => {
-    return brand + age;
-  };
+  function sayHello(args: InferHelloProps<typeof getHelloProps>) {
+    console.log(args);
+  }
+
+  const data = await getHelloProps();
+  sayHello(data.props);
 }
