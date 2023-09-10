@@ -1,13 +1,10 @@
 interface Person {
   name: string;
+  age: number;
 }
 
-type ReturnType<T> = T extends () => infer R ? R : number;
+type PersonKey = keyof Person;
 
 export default function play() {
-  function logger() {
-    return "Hello World";
-  }
-
-  const loggerReturn: ReturnType<typeof logger> = "Hi there";
+  const personKey: PersonKey = "name"
 }
